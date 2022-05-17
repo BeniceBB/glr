@@ -18,7 +18,7 @@
                     background-color: #AAAAAA;
                 }
                 .description{
-                    max-height: 100px;
+                    height: 100px;
                     overflow: hidden;
                 }
 
@@ -49,11 +49,26 @@
                     background-color: #5eb5e0;
                 }
 
+                .align-center{
+                    text-align: center;
+                }
+
+                .isFullyBooked{
+                    color: lightgrey;
+                }
+
 
             </style>
         {% endblock %}
     </head>
     <body>
+    <div class="topheader m-0">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_logout') }}" class="btn btn-dark">Loguit</a>
+        {% else %}
+        <a href="{{ path('app_login') }}" class="btn btn-dark">Login</a>
+        {% endif %}
+    </div>
         {% block body %}
 
         {% endblock %}

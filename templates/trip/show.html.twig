@@ -3,32 +3,28 @@
 {% block title %}Trip{% endblock %}
 
 {% block body %}
-    <h1>Trip</h1>
+<div class="container-fluid p-0">
+    <div class="header-bg"></div>
+    <div class="row">
+        <div class="col-10 mx-auto">
+    <h1>{{ trip.title }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ trip.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ trip.title }}</td>
-            </tr>
-            <tr>
-                <th>Destination</th>
+                <th>Bestemming</th>
                 <td>{{ trip.destination }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Omschrijving</th>
                 <td>{{ trip.description }}</td>
             </tr>
             <tr>
-                <th>Startdate</th>
+                <th>Begindatum</th>
                 <td>{{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Enddate</th>
+                <th>Einddatum</th>
                 <td>{{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
@@ -38,7 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_trip_index') }}">back to list</a>
+    <a href="{{ path('app_trip_overview') }}">Terug naar het overzicht</a>
     <a href="{{ path('app_attendee_new', {'tripId': trip.id }) }}">Deze reis boeken</a>
-
+        </div>
+    </div>
+        </div>
 {% endblock %}

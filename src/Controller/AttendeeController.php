@@ -37,7 +37,8 @@ class AttendeeController extends AbstractController
     {
         $attendee = new Attendee();
         $trip = $tripRepository->findOneById($tripId);
-        $student = $studentRepository->findOneById(2);
+        $studentID = $this->getUser()->getId();
+        $student = $studentRepository->findOneById($studentID);
         $form = $this->createForm(AttendeeType::class, $attendee);
         $form->handleRequest($request);
 

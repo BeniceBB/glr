@@ -4,22 +4,29 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-9 mx-auto">
-            <div class="row">
+        <div class="col-12 mx-auto">
+            <div class="row justify-content-center">
                 {% for trip in trips %}
-                    <div class="col-4 border p-0 m-0">
+                    <div class="col-3 border p-0 m-2">
                         <div class="image" style="background-color: #B0413E; height: 200px;"></div>
                         <div class="textarea m-2">
-                            {{ trip.title }} <br>
-                            {{ trip.destination }} <br>
+                            <h2><a href="{{ path('app_trip_show', {'id': trip.id}) }}">{{ trip.title }}</a></h2>
+                            <i> {{ trip.destination }}</i> <br>
+                            {{ trip.startdate ? trip.startdate|date('d-m-Y') : '' }} - {{ trip.enddate ? trip.enddate|date('d-m-Y') : '' }} <br><br>
                             <div class="description">
                                 {{ trip.description }}
                             </div>
-                            {{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }} -
-                            {{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }} <br>
-                            {{ trip.maxStudents }} <br>
+<br>
+                            {% if isBooked['alreadyBooked'][trip.id] %}
+                            <div class="isBooked"><i>Geboekt<br></i></div>
+                            {% elseif isBooked['available'][trip.id] > 1 %}
+                            <div class="isBooked"><i>Nog {{ isBooked['available'][trip.id] }} plaatsen beschikbaar<br></i></div>
+                            {% elseif  isBooked['available'][trip.id] == 1 %}
+                                <div class="isBooked"><i>Nog {{ isBooked['available'][trip.id] }} plaats beschikbaar<br></i></div>
+                            {% elseif  isBooked['available'][trip.id] == 0 %}
+                                <div class="isFullyBooked"><i>Niet meer beschikbaar<br></i></div>
+                            {% endif %}
 
-                            <a href="{{ path('app_trip_show', {'id': trip.id}) }}">show</a>
                         </div>
                     </div>
 

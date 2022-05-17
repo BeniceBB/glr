@@ -3,14 +3,10 @@
 {% block title %}Trip{% endblock %}
 
 {% block body %}
-    <h1>Trip</h1>
+    <h1>{{ trip.title }}</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ trip.id }}</td>
-            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ trip.title }}</td>
@@ -38,9 +34,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_trip_index') }}">back to list</a>
+    <a href="{{ path('app_trip_index') }}">Terug naar overzicht</a>
+    <a href="{{ path('app_attendees_new') }}">Deze reis boeken</a>
 
-    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}">edit</a>
-
-    {{ include('trip/_delete_form.html.twig') }}
 {% endblock %}

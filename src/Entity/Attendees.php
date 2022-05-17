@@ -5,23 +5,34 @@ namespace App\Entity;
 use App\Repository\AttendeesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AttendeesRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass="AttendeesRepository::class")
+ */
+
 class Attendees
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: Student::class, inversedBy: 'attendees')]
-    #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Student", inversedBy="attendees")
+     * @ORM\JoinColumn(nullable=false)
+     */
     private $student;
 
-    #[ORM\ManyToOne(targetEntity: Trip::class, inversedBy: 'attendees')]
-    #[ORM\JoinColumn(nullable: false)]
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trip", inversedBy="attendees")
+     * @ORM\JoinColumn(nullable=false)
+     */
     private $trip;
 
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Column(type="integer")
+     */
     private $identity;
 
     public function getId(): ?int

@@ -29,6 +29,7 @@ class TripManager
 
         $trips = $this->tripRepository->findAll();
 
+        // Check voor alle reizen of deze vol zit of al geboekt is
         foreach($trips as $trip) {
             $id = $trip->getId();
             $maxStudents = $trip->getMaxStudents();
@@ -55,6 +56,38 @@ class TripManager
             'fullyBooked' => $fullyBooked,
             'alreadyBooked' => $alreadyBooked,
             'available' => $available,
+        ];
+    }
+
+    public function isBookedByTrip(string $studentNumber, int $id): array
+    {
+        $trip = $this->tripRepository->findOneById($id);
+
+        $maxStudents = $trip->getMaxStudents();
+        $attendees = $this->attendeeRepository->findByTrip($id);
+        $alreadyBooked = false;
+        $attendeeId = 0;
+        foreach ($attendees as $attendee) {
+            if ($attendee->getStudent()->getStudentNumber() === $studentNumber) {
+                $alreadyBooked = true;
+                $attendeeId = $attendee->getId();
+            }
+        }
+
+        $amount = count($attendees);
+        $fullyBooked = false;
+        if ($maxStudents <= $amount && $maxStudents !== null) {
+            $fullyBooked = true;
+        }
+
+        $available = $maxStudents - $amount;
+
+        return [
+            'amountBooked' => $amount,
+            'fullyBooked' => $fullyBooked,
+            'alreadyBooked' => $alreadyBooked,
+            'available' => $available,
+            'attendeeId' => $attendeeId,
         ];
     }
 }

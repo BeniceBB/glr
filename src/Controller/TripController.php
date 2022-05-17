@@ -19,10 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class TripController extends AbstractController
 {
     private TripRepository $tripRepository;
+    private TripManager $tripManager;
 
-    public function __construct(TripRepository $tripRepository)
+    public function __construct(TripRepository $tripRepository, TripManager $tripManager)
     {
         $this->tripRepository = $tripRepository;
+        $this->tripManager = $tripManager;
     }
     /**
      * @Route("/", name="app_trip_index", methods={"GET"})
@@ -42,10 +44,10 @@ class TripController extends AbstractController
     /**
      * @Route("/overview", name="app_trip_overview", methods={"GET"})
      */
-    public function overview(TripManager $tripManager): Response
+    public function overview(): Response
     {
         $studentNumber = $this->getUser()->getStudentNumber();
-        $isBooked = $tripManager->isBooked($studentNumber);
+        $isBooked = $this->tripManager->isBooked($studentNumber);
 
         return $this->render('trip/overview.html.twig', [
             'trips' => $this->tripRepository->findAll(),
@@ -80,10 +82,14 @@ class TripController extends AbstractController
     /**
      * @Route("/{id}", name="app_trip_show", methods={"GET"})
      */
-    public function show(Trip $trip): Response
+    public function show(Trip $trip, int $id): Response
     {
+        $studentNumber = $this->getUser()->getStudentNumber();
+        $isBooked = $this->tripManager->isBookedByTrip($studentNumber, $id);
+
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
+            'isBooked' => $isBooked,
         ]);
     }
 

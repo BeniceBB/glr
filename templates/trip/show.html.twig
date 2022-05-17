@@ -1,12 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trip{% endblock %}
+{% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
-<div class="container-fluid p-0">
-    <div class="header-bg"></div>
-    <div class="row">
-        <div class="col-10 mx-auto">
+        <div class="col-10 mx-auto trip-detail-block p-3">
     <h1>{{ trip.title }}</h1>
 
     <table class="table">
@@ -20,23 +17,25 @@
                 <td>{{ trip.description }}</td>
             </tr>
             <tr>
-                <th>Begindatum</th>
-                <td>{{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }}</td>
+                <th>Datum</th>
+                <td>{{ trip.startdate ? trip.startdate|date('d-m-Y') : '' }} - {{ trip.enddate ? trip.enddate|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
-                <th>Einddatum</th>
-                <td>{{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>MaxStudents</th>
+                <th>Maximaal studenten</th>
                 <td>{{ trip.maxStudents }}</td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('app_trip_overview') }}">Terug naar het overzicht</a>
-    <a href="{{ path('app_attendee_new', {'tripId': trip.id }) }}">Deze reis boeken</a>
-        </div>
-    </div>
+    <a href="{{ path('app_trip_overview') }}" class="btn btn-light">Terug naar het overzicht</a>
+            {% if isBooked['alreadyBooked'] %}
+                <form method="post" action="{{ path('app_attendee_delete', {'id': isBooked['attendeeId']}) }}" onsubmit="return confirm('Weet je zeker dat je deze reis wilt annuleren?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ isBooked['attendeeId']) }}">
+                    <button class="btn btn-danger right">Deze reis annuleren</button>
+                </form>
+            {% elseif isBooked['available'] > 0 %}
+                <a href="{{ path('app_attendee_new', {'tripId': trip.id }) }}" class="btn btn-warning right">Deze reis boeken</a>
+            {% else %}
+                <div class="isFullyBooked right"><i>Niet meer beschikbaar<br></i></div>
+            {% endif %}
         </div>
 {% endblock %}

@@ -54,11 +54,13 @@ class AttendeeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Attendee
+//    public function findOneByTripAndStudent($trip, $student): ?Attendee
 //    {
 //        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
+//            ->andWhere('a.trip = :val')
+//            ->setParameter('val', $trip)
+//            ->andWhere('a.student = :val')
+//            ->setParameter('val', $student)
 //            ->getQuery()
 //            ->getOneOrNullResult()
 //        ;

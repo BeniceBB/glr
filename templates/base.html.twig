@@ -22,11 +22,15 @@
                     overflow: hidden;
                 }
 
-                .intro-block{
+                .intro-block, .trip-detail-block, .book-block{
                     margin-top: -3.5rem;
                     background-color: white;
-                    box-shadow: 0px 0px 30px 0px #aaa;
+                    box-shadow: 0 0 30px 0 #aaa;
                     border-radius: 5px;
+                }
+
+                .trip-detail-block, .book-block{
+                min-height: calc(70vh - 130px);
                 }
 
                 .home-image{
@@ -57,20 +61,44 @@
                     color: lightgrey;
                 }
 
+                .right{
+                    float: right;
+                }
+
+                h2 a{
+                    text-decoration: none;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                }
+
+                h2 a:hover{
+                    text-decoration: underline dotted black;
+                }
+
 
             </style>
         {% endblock %}
     </head>
     <body>
+    <div class="container-fluid p-0">
+
     <div class="topheader m-0">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a href="{{ path('app_logout') }}" class="btn btn-dark">Loguit</a>
+            <a href="{{ path('app_logout') }}" class="btn">Loguit</a>
         {% else %}
-        <a href="{{ path('app_login') }}" class="btn btn-dark">Login</a>
+        <a href="{{ path('app_login') }}" class="btn">Login</a>
         {% endif %}
     </div>
+        <div class="header-bg"></div>
+        <div class="row m-0">
         {% block body %}
 
         {% endblock %}
+        </div>
+        <div class="row mx-0 mt-5">
+            <div class="col-12 footer"></div>
+        </div>
+    </div>
+
     </body>
 </html>

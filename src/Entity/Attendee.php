@@ -37,6 +37,11 @@ class Attendee
      */
     private $trip;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $comments;
+
 
     public function getId(): ?int
     {
@@ -75,6 +80,18 @@ class Attendee
     public function setTrip(?Trip $trip): self
     {
         $this->trip = $trip;
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): self
+    {
+        $this->comments = $comments;
 
         return $this;
     }

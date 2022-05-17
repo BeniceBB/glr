@@ -3,12 +3,13 @@
 {% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
-                <div class="col-8 align-center mx-auto intro-block p-3">
-                    <h1>Ga Lekker Reizen!</h1>
+                <div class="col-8 mx-auto intro-block p-3">
+                    <h1>Ga Lekker Reizen</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat nibh, ultrices vel vehicula ut, mattis a felis. Duis sit amet lacus et purus iaculis auctor non et tortor. Morbi vel libero quis ante facilisis vehicula. Donec at tincidunt nisl. Praesent quis dolor id odio ultrices vehicula eu sed elit. Ut in nisi cursus, eleifend est in, porttitor lorem. Curabitur id semper nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat nibh, ultrices vel vehicula ut, mattis a felis. Duis sit amet lacus et purus iaculis auctor non et tortor. Morbi vel libero quis ante facilisis vehicula. Donec at tincidunt nisl. Praesent quis dolor id odio ultrices vehicula eu sed elit. Ut in nisi cursus, eleifend est in, porttitor lorem. Curabitur id semper nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path('app_trip_overview') }}"
-                       class="btn btn-dark">Bekijk alle reizen</a>
+                       class="btn btn-warning">Bekijk alle reizen</a>
                     {% endif %}
                 </div>
         </div>

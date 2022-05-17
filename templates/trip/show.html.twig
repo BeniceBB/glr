@@ -27,7 +27,9 @@
         </tbody>
     </table>
     <a href="{{ path('app_trip_overview') }}" class="btn btn-light">Terug naar het overzicht</a>
-            {% if isBooked['alreadyBooked'] %}
+            {% if isAdmin %}
+
+            {% elseif isBooked['alreadyBooked'] %}
                 <form method="post" action="{{ path('app_attendee_delete', {'id': isBooked['attendeeId']}) }}" onsubmit="return confirm('Weet je zeker dat je deze reis wilt annuleren?');">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ isBooked['attendeeId']) }}">
                     <button class="btn btn-danger right">Deze reis annuleren</button>

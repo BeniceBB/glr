@@ -46,7 +46,7 @@ class AttendeeController extends AbstractController
             $attendee->setTrip($trip);
             $attendee->setStudent($student);
             $attendeeRepository->add($attendee, true);
-            return $this->redirectToRoute('app_attendee_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('attendee/new.html.twig', [

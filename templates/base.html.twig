@@ -14,19 +14,27 @@
             {{ encore_entry_script_tags('app') }}
             <style>
                 .header-bg{
-                    height: 30vh;
-                    background-color: #AAAAAA;
+                    height: 40vh;
+                    background-image: url("https://pixabay.com/get/g59947d9aaa88d45d85b616894e13b7297cdddabcf39f1795141df9b2c15baad23da89fd1feb80f124db837041845d25752c7fa78bbb0f8b5257c396be44c85c1_1280.jpg");
                 }
                 .description{
                     height: 100px;
                     overflow: hidden;
                 }
 
-                .intro-block, .trip-detail-block, .book-block{
-                    margin-top: -3.5rem;
+                .topheader{
                     background-color: white;
-                    box-shadow: 0 0 30px 0 #aaa;
-                    border-radius: 5px;
+                    opacity: .5;
+                    width: 100vw;
+                    text-align: right;
+                }
+
+                .intro-block, .trip-detail-block, .book-block{
+                    margin-top: -5rem;
+                    background-color: white;
+                    box-shadow: 0 0 20px 0 lightgrey;
+                    border-radius: 1px;
+                    opacity: .85;
                 }
 
                 .trip-detail-block, .book-block{
@@ -34,13 +42,15 @@
                 }
 
                 .home-image{
-                    height: 30vh;
-                    background-color: #B0413E;
+                    height: 50vh;
+                    background-image: url("https://pixabay.com/get/g1612b5f06030c7bebe32564b8d9fd24a2165a0bfffa04b4c3891bfbfbb06c3de95e42b86f07ca8f105a93d63e8e95cbca8bc72cfb7b8ecb71cbc9fdcf6a3edcd_1920.jpg");
+                    background-size: cover;
                 }
 
                 .home-image-1{
-                    height: 30vh;
-                    background-color: #5eb5e0;
+                    height: 50vh;
+                    background-image: url("https://pixabay.com/get/g2042ef513d0eed5f34f1e3bdbdcf8bc49c6012ae7693f8e69504ef1c953fb37576ab36037f3198c70a3e80f04f9aa9965154d169fcaff8c37d2b2561c8cb74e3_1920.jpg");
+                    background-size: cover;
                 }
 
                 .footer{
@@ -75,6 +85,12 @@
                     text-decoration: underline dotted black;
                 }
 
+                h1{
+                    font-weight: 300;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                }
+
 
             </style>
         {% endblock %}
@@ -82,7 +98,7 @@
     <body>
     <div class="container-fluid p-0">
 
-    <div class="topheader m-0">
+    <div class="topheader m-0 right">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('app_logout') }}" class="btn">Loguit</a>
         {% else %}

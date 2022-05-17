@@ -90,6 +90,7 @@ class TripController extends AbstractController
         return $this->render('trip/show.html.twig', [
             'trip' => $trip,
             'isBooked' => $isBooked,
+            'isAdmin' => $this->getUser()->getFirstname() === 'Admin',
         ]);
     }
 

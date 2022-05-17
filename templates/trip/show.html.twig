@@ -3,17 +3,21 @@
 {% block title %}Trip{% endblock %}
 
 {% block body %}
-    <h1>{{ trip.title }}</h1>
+    <h1>Trip</h1>
 
     <table class="table">
         <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ trip.id }}</td>
+            </tr>
             <tr>
                 <th>Title</th>
                 <td>{{ trip.title }}</td>
             </tr>
             <tr>
-                <th>Location</th>
-                <td>{{ trip.location }}</td>
+                <th>Destination</th>
+                <td>{{ trip.destination }}</td>
             </tr>
             <tr>
                 <th>Description</th>
@@ -34,7 +38,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_trip_index') }}">Terug naar overzicht</a>
-    <a href="{{ path('app_attendees_new') }}">Deze reis boeken</a>
+    <a href="{{ path('app_trip_index') }}">back to list</a>
+    <a href="{{ path('app_attendee_new') }}">Deze reis boeken</a>
 
 {% endblock %}

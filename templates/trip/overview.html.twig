@@ -7,21 +7,21 @@
         <div class="col-9 mx-auto">
             <div class="row">
                 {% for trip in trips %}
-                <div class="col-4 border p-0 m-0">
-                    <div class="image" style="background-color: #B0413E; height: 200px;"></div>
-                    <div class="textarea m-2">
-                        {{ trip.title }} <br>
-                        {{ trip.location }} <br>
-                        <div class="description">
-                        {{ trip.description }}
-                        </div>
-                        {{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }} -
-                        {{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }} <br>
-                        {{ trip.maxStudents }} <br>
+                    <div class="col-4 border p-0 m-0">
+                        <div class="image" style="background-color: #B0413E; height: 200px;"></div>
+                        <div class="textarea m-2">
+                            {{ trip.title }} <br>
+                            {{ trip.destination }} <br>
+                            <div class="description">
+                                {{ trip.description }}
+                            </div>
+                            {{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }} -
+                            {{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }} <br>
+                            {{ trip.maxStudents }} <br>
 
-                        <a href="{{ path('app_trip_show', {'id': trip.id}) }}">show</a>
+                            <a href="{{ path('app_trip_show', {'id': trip.id}) }}">show</a>
+                        </div>
                     </div>
-                </div>
 
                 {% else %}
                     Geen reizen gevonden
@@ -32,3 +32,4 @@
     </div>
 
 {% endblock %}
+

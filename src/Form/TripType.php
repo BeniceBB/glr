@@ -13,7 +13,7 @@ class TripType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('location')
+            ->add('destination')
             ->add('description')
             ->add('startdate')
             ->add('enddate')

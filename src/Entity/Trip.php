@@ -7,33 +7,51 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TripRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=TripRepository::class)
+ */
 class Trip
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 50)]
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
     private $title;
 
-    #[ORM\Column(type: 'string', length: 50)]
-    private $location;
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $destination;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    /**
+     * @ORM\Column(type="text")
+     */
     private $description;
 
-    #[ORM\Column(type: 'date')]
+    /**
+     * @ORM\Column(type="date")
+     */
     private $startdate;
 
-    #[ORM\Column(type: 'date')]
+    /**
+     * @ORM\Column(type="date")
+     */
     private $enddate;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
     private $maxStudents;
 
-    #[ORM\OneToMany(mappedBy: 'tripId', targetEntity: Attendees::class)]
+    /**
+     * @ORM\OneToMany(targetEntity=Attendee::class, mappedBy="trip")
+     */
     private $attendees;
 
     public function __construct()
@@ -58,14 +76,14 @@ class Trip
         return $this;
     }
 
-    public function getLocation(): ?string
+    public function getDestination(): ?string
     {
-        return $this->location;
+        return $this->destination;
     }
 
-    public function setLocation(string $location): self
+    public function setDestination(string $destination): self
     {
-        $this->location = $location;
+        $this->destination = $destination;
 
         return $this;
     }
@@ -75,7 +93,7 @@ class Trip
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -119,29 +137,29 @@ class Trip
     }
 
     /**
-     * @return Collection<int, Attendees>
+     * @return Collection<int, Attendee>
      */
     public function getAttendees(): Collection
     {
         return $this->attendees;
     }
 
-    public function addAttendee(Attendees $attendee): self
+    public function addAttendee(Attendee $attendee): self
     {
         if (!$this->attendees->contains($attendee)) {
             $this->attendees[] = $attendee;
-            $attendee->setTripId($this);
+            $attendee->setTrip($this);
         }
 
         return $this;
     }
 
-    public function removeAttendee(Attendees $attendee): self
+    public function removeAttendee(Attendee $attendee): self
     {
         if ($this->attendees->removeElement($attendee)) {
             // set the owning side to null (unless already changed)
-            if ($attendee->getTripId() === $this) {
-                $attendee->setTripId(null);
+            if ($attendee->getTrip() === $this) {
+                $attendee->setTrip(null);
             }
         }
 

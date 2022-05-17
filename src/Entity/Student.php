@@ -3,32 +3,59 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: StudentRepository::class)]
+/**
+ * @ORM\Entity(repositoryClass=StudentRepository::class)
+ */
 class Student implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
     private $studentNumber;
 
-    #[ORM\Column(type: 'json')]
+    /**
+     * @ORM\Column(type="json")
+     */
     private $roles = [];
 
-    #[ORM\Column(type: 'string')]
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
     private $password;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
     private $firstname;
 
-    #[ORM\Column(type: 'string', length: 100)]
+    /**
+     * @ORM\Column(type="string", length=100)
+     */
     private $lastname;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Attendee::class, mappedBy="student")
+     */
+    private $attendees;
+
+    public function __construct()
+    {
+        $this->attendees = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +166,36 @@ class Student implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Attendee>
+     */
+    public function getAttendees(): Collection
+    {
+        return $this->attendees;
+    }
+
+    public function addAttendee(Attendee $attendee): self
+    {
+        if (!$this->attendees->contains($attendee)) {
+            $this->attendees[] = $attendee;
+            $attendee->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttendee(Attendee $attendee): self
+    {
+        if ($this->attendees->removeElement($attendee)) {
+            // set the owning side to null (unless already changed)
+            if ($attendee->getStudent() === $this) {
+                $attendee->setStudent(null);
+            }
+        }
 
         return $this;
     }

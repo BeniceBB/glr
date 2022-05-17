@@ -10,10 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/trip")
+ */
 class TripController extends AbstractController
 {
     /**
-     * @Route("/trips", name="app_trip_index", methods={"GET"})
+     * @Route("/", name="app_trip_index", methods={"GET"})
      */
     public function index(TripRepository $tripRepository): Response
     {
@@ -23,7 +26,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/trips/overview", name="app_trip_overview", methods={"GET"})
+     * @Route("/overview", name="app_trip_overview", methods={"GET"})
      */
     public function overview(TripRepository $tripRepository): Response
     {
@@ -33,7 +36,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/trips/create", name="app_trip_new", methods={"GET", "POST"})
+     * @Route("/new", name="app_trip_new", methods={"GET", "POST"})
      */
     public function new(Request $request, TripRepository $tripRepository): Response
     {
@@ -54,7 +57,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/trips/{id}", name="app_trip_show", methods={"GET"})
+     * @Route("/{id}", name="app_trip_show", methods={"GET"})
      */
     public function show(Trip $trip): Response
     {
@@ -64,7 +67,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/trips/{id}/edit", name="app_trip_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="app_trip_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Trip $trip, TripRepository $tripRepository): Response
     {
@@ -84,7 +87,7 @@ class TripController extends AbstractController
     }
 
     /**
-     * @Route("/trips/{id}", name="app_trip_delete", methods={"POST"})
+     * @Route("/{id}", name="app_trip_delete", methods={"POST"})
      */
     public function delete(Request $request, Trip $trip, TripRepository $tripRepository): Response
     {

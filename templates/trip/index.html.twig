@@ -10,7 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Location</th>
+                <th>Destination</th>
                 <th>Description</th>
                 <th>Startdate</th>
                 <th>Enddate</th>
@@ -23,7 +23,7 @@
             <tr>
                 <td>{{ trip.id }}</td>
                 <td>{{ trip.title }}</td>
-                <td>{{ trip.location }}</td>
+                <td>{{ trip.destination }}</td>
                 <td>{{ trip.description }}</td>
                 <td>{{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }}</td>
                 <td>{{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }}</td>

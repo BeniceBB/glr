@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Attendee;
 use App\Form\AttendeeType;
 use App\Repository\AttendeeRepository;
+use App\Repository\StudentRepository;
+use App\Repository\TripRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,21 +22,28 @@ class AttendeeController extends AbstractController
      */
     public function index(AttendeeRepository $attendeeRepository): Response
     {
-        return $this->render('attendee/index.html.twig', [
-            'attendees' => $attendeeRepository->findAll(),
-        ]);
+        if($this->getUser()->getFirstname() === 'Admin') {
+            return $this->render('attendee/index.html.twig', [
+                'attendees' => $attendeeRepository->findAll(),
+            ]);
+        }
+        return $this->render('index.html.twig');
     }
 
     /**
-     * @Route("/new", name="app_attendee_new", methods={"GET", "POST"})
+     * @Route("/book/{tripId}", name="app_attendee_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, AttendeeRepository $attendeeRepository): Response
+    public function new(Request $request, AttendeeRepository $attendeeRepository, TripRepository $tripRepository, StudentRepository $studentRepository, int $tripId): Response
     {
         $attendee = new Attendee();
+        $trip = $tripRepository->findOneById($tripId);
+        $student = $studentRepository->findOneById(2);
         $form = $this->createForm(AttendeeType::class, $attendee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $attendee->setTrip($trip);
+            $attendee->setStudent($student);
             $attendeeRepository->add($attendee, true);
             return $this->redirectToRoute('app_attendee_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -52,26 +61,6 @@ class AttendeeController extends AbstractController
     {
         return $this->render('attendee/show.html.twig', [
             'attendee' => $attendee,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="app_attendee_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Attendee $attendee, AttendeeRepository $attendeeRepository): Response
-    {
-        $form = $this->createForm(AttendeeType::class, $attendee);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $attendeeRepository->add($attendee, true);
-
-            return $this->redirectToRoute('app_attendee_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('attendee/edit.html.twig', [
-            'attendee' => $attendee,
-            'form' => $form,
         ]);
     }
 

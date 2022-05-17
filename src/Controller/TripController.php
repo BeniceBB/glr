@@ -20,9 +20,14 @@ class TripController extends AbstractController
      */
     public function index(TripRepository $tripRepository): Response
     {
-        return $this->render('trip/index.html.twig', [
-            'trips' => $tripRepository->findAll(),
-        ]);
+        if($this->getUser()->getFirstname() === 'Admin') {
+            return $this->render('trip/index.html.twig', [
+                'trips' => $tripRepository->findAll(),
+            ]);
+        }
+        else{
+            return $this->render('index.html.twig');
+        }
     }
 
     /**
@@ -40,20 +45,23 @@ class TripController extends AbstractController
      */
     public function new(Request $request, TripRepository $tripRepository): Response
     {
-        $trip = new Trip();
-        $form = $this->createForm(TripType::class, $trip);
-        $form->handleRequest($request);
+        if($this->getUser()->getFirstname() === 'Admin') {
+            $trip = new Trip();
+            $form = $this->createForm(TripType::class, $trip);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $tripRepository->add($trip, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $tripRepository->add($trip, true);
 
-            return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('trip/new.html.twig', [
+                'trip' => $trip,
+                'form' => $form,
+            ]);
         }
-
-        return $this->renderForm('trip/new.html.twig', [
-            'trip' => $trip,
-            'form' => $form,
-        ]);
+        return $this->render('index.html.twig');
     }
 
     /**
@@ -71,19 +79,22 @@ class TripController extends AbstractController
      */
     public function edit(Request $request, Trip $trip, TripRepository $tripRepository): Response
     {
-        $form = $this->createForm(TripType::class, $trip);
-        $form->handleRequest($request);
+        if($this->getUser()->getFirstname() === 'Admin') {
+            $form = $this->createForm(TripType::class, $trip);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $tripRepository->add($trip, true);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $tripRepository->add($trip, true);
 
-            return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('trip/edit.html.twig', [
+                'trip' => $trip,
+                'form' => $form,
+            ]);
         }
-
-        return $this->renderForm('trip/edit.html.twig', [
-            'trip' => $trip,
-            'form' => $form,
-        ]);
+        return $this->render('index.html.twig');
     }
 
     /**
@@ -91,10 +102,12 @@ class TripController extends AbstractController
      */
     public function delete(Request $request, Trip $trip, TripRepository $tripRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$trip->getId(), $request->request->get('_token'))) {
+        if($this->getUser()->getFirstname() === 'Admin') {
+            if ($this->isCsrfTokenValid('delete'.$trip->getId(), $request->request->get('_token'))) {
             $tripRepository->remove($trip, true);
         }
-
-        return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trip_index', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('index.html.twig');
     }
 }

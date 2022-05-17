@@ -8,20 +8,19 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Identity</th>
-                <th>actions</th>
+                <th>Student</th>
+                <th>Identiteitsnummer</th>
+                <th>Reis</th>
+                <th>Boekingsnummer</th>
             </tr>
         </thead>
         <tbody>
         {% for attendee in attendees %}
             <tr>
-                <td>{{ attendee.id }}</td>
+                <td>{{ attendee.student.studentNumber }} ({{ attendee.student.firstname }})</td>
                 <td>{{ attendee.identity }}</td>
-                <td>
-                    <a href="{{ path('app_attendee_show', {'id': attendee.id}) }}">show</a>
-                    <a href="{{ path('app_attendee_edit', {'id': attendee.id}) }}">edit</a>
-                </td>
+                <td>{{ attendee.trip.title }}</td>
+                <td>{{ attendee.trip.id }}</td>
             </tr>
         {% else %}
             <tr>
@@ -30,6 +29,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_attendee_new') }}">Create new</a>
 {% endblock %}

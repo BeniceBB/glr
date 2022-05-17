@@ -39,6 +39,6 @@
     </table>
 
     <a href="{{ path('app_trip_index') }}">back to list</a>
-    <a href="{{ path('app_attendee_new') }}">Deze reis boeken</a>
+    <a href="{{ path('app_attendee_new', {'tripId': trip.id }) }}">Deze reis boeken</a>
 
 {% endblock %}

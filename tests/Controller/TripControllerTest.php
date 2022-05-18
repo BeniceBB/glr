@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Test\Controller;
+namespace App\Tests\Controller;
 
+use App\Entity\Student;
 use App\Entity\Trip;
 use App\Repository\TripRepository;
+use App\Repository\StudentRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -11,12 +13,14 @@ class TripControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private TripRepository $repository;
+    private StudentRepository $studentRepository;
     private string $path = '/trip/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
         $this->repository = (static::getContainer()->get('doctrine'))->getRepository(Trip::class);
+        $this->studentRepository = (static::getContainer()->get('doctrine'))->getRepository(Student::class);
 
         foreach ($this->repository->findAll() as $object) {
             $this->repository->remove($object, true);
@@ -26,12 +30,10 @@ class TripControllerTest extends WebTestCase
     public function testIndex(): void
     {
         $crawler = $this->client->request('GET', $this->path);
+        $user = $this->studentRepository->findOneById(3);
+        $this->client->loginUser($user);
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Trip index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first());
     }
 
     public function testNew(): void

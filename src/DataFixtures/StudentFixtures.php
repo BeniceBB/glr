@@ -42,6 +42,18 @@ class StudentFixtures extends Fixture
         $student->setPassword($hashedPassword);
         $manager->persist($student);
 
+        $student = new Student();
+        $student->setFirstname('Admin');
+        $student->setLastname('Admin');
+        $student->setStudentNumber('admin');
+        $plaintextPassword = '#1Geheim';
+        $hashedPassword = $this->passwordHasher->hashPassword(
+            $student,
+            $plaintextPassword
+        );
+        $student->setPassword($hashedPassword);
+        $manager->persist($student);
+
         $manager->flush();
     }
 }

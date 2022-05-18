@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Attendee{% endblock %}
+{% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
-    <h1>Create new Attendee</h1>
+<div class="col-10 mx-auto book-block p-3">
 
+<h1>Boeken</h1>
+    <h2>{{ trip.title }}</h2>
+    <i>{{  trip.destination }}</i>
     {{ include('attendee/_form.html.twig') }}
 
-    <a href="{{ path('app_trip_overview') }}">Terug naar overzicht</a>
+    <a href="{{ path('app_trip_overview') }}" class="btn btn-light">Terug naar overzicht</a>
+</div>
 {% endblock %}

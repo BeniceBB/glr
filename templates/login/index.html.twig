@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
 <div class="container-fluid p-0">
@@ -11,16 +11,16 @@
     {% endif %}
 
         <form action="{{ path('app_login') }}" method="post">
-            <label for="username">Email:</label>
-            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+            <label for="username">Studentnummer</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="_password"/>
+            <label for="password">Wachtwoord</label>
+            <input type="password" id="password" name="_password" class="form-control"/>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             <input type="hidden" name="_target_path" value="{{ path('app_trip_overview') }}"/>
 
-            <button type="submit">login</button>
+            <button type="submit" class="btn btn-warning mt-4">Login</button>
         </form>
     </div>
     <div class="col-6 login-bg"></div>

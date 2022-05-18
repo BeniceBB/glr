@@ -2,7 +2,7 @@
     ServerName web02.ict-lab.nl
     ServerAlias ex79458.ict-lab.nl
 
-    DocumentRoot /var/www/project/public
+    DocumentRoot /var/www/httpdocs/public
     <Directory /var/www/project/public>
         AllowOverride All
         Order Allow,Deny

@@ -100,10 +100,18 @@
     <div class="container-fluid p-0">
 
     <div class="topheader m-0 right">
+        <a href="{{ path('app_default') }}" class="btn">HOME</a>
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <a href="{{ path('app_logout') }}" class="btn">Loguit</a>
+            {% if app.user.studentNumber == 'admin'%}
+                <a href="{{ path('app_trip_index') }}" class="btn">REIZEN</a>
+                <a href="{{ path('app_trip_new') }}" class="btn">NIEUWE REIS</a>
+                <a href="{{ path('app_attendee_index') }}" class="btn">INSCHRIJVINGEN</a>
+            {% else %}
+                <a href="{{ path('app_trip_overview') }}" class="btn">REIZEN</a>
+            {% endif %}
+            <a href="{{ path('app_logout') }}" class="btn">LOGUIT</a>
         {% else %}
-        <a href="{{ path('app_login') }}" class="btn">Login</a>
+        <a href="{{ path('app_login') }}" class="btn">LOGIN</a>
         {% endif %}
     </div>
         <div class="header-bg"></div>

@@ -10,6 +10,9 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a href="{{ path('app_trip_overview') }}"
                        class="btn btn-warning">Bekijk alle reizen</a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}"
+                               class="btn btn-warning">Login</a>
                     {% endif %}
                 </div>
         </div>

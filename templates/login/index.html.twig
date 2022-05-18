@@ -5,7 +5,8 @@
 {% block body %}
 <div class="container-fluid p-0">
 <div class="row mx-0">
-    <div class="col-6 align-center">
+    <div class="col-8 mx-auto intro-block p-3">
+        <h1>Inloggen</h1>
 {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -23,7 +24,7 @@
             <button type="submit" class="btn btn-warning mt-4">Login</button>
         </form>
     </div>
-    <div class="col-6 login-bg"></div>
+    </div>
 </div>
 </div>
 {% endblock %}

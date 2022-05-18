@@ -35,8 +35,6 @@ class AttendeeController extends AbstractController
      */
     public function new(Request $request, AttendeeRepository $attendeeRepository, TripRepository $tripRepository, StudentRepository $studentRepository, int $tripId): Response
     {
-        if(!$this->getUser()->getFirstname() === 'Admin') {
-
             $attendee = new Attendee();
             $trip = $tripRepository->findOneById($tripId);
             $studentID = $this->getUser()->getId();
@@ -56,8 +54,6 @@ class AttendeeController extends AbstractController
                 'form' => $form,
                 'trip' => $trip,
             ]);
-        }
-        return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

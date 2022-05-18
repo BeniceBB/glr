@@ -27,7 +27,7 @@ class AttendeeController extends AbstractController
                 'attendees' => $attendeeRepository->findAll(),
             ]);
         }
-        return $this->render('index.html.twig');
+        return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -35,25 +35,29 @@ class AttendeeController extends AbstractController
      */
     public function new(Request $request, AttendeeRepository $attendeeRepository, TripRepository $tripRepository, StudentRepository $studentRepository, int $tripId): Response
     {
-        $attendee = new Attendee();
-        $trip = $tripRepository->findOneById($tripId);
-        $studentID = $this->getUser()->getId();
-        $student = $studentRepository->findOneById($studentID);
-        $form = $this->createForm(AttendeeType::class, $attendee);
-        $form->handleRequest($request);
+        if(!$this->getUser()->getFirstname() === 'Admin') {
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $attendee->setTrip($trip);
-            $attendee->setStudent($student);
-            $attendeeRepository->add($attendee, true);
-            return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
+            $attendee = new Attendee();
+            $trip = $tripRepository->findOneById($tripId);
+            $studentID = $this->getUser()->getId();
+            $student = $studentRepository->findOneById($studentID);
+            $form = $this->createForm(AttendeeType::class, $attendee);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $attendee->setTrip($trip);
+                $attendee->setStudent($student);
+                $attendeeRepository->add($attendee, true);
+                return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->renderForm('attendee/new.html.twig', [
+                'attendee' => $attendee,
+                'form' => $form,
+                'trip' => $trip,
+            ]);
         }
-
-        return $this->renderForm('attendee/new.html.twig', [
-            'attendee' => $attendee,
-            'form' => $form,
-            'trip' => $trip,
-        ]);
+        return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

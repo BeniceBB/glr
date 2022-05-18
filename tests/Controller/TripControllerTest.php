@@ -29,65 +29,63 @@ class TripControllerTest extends WebTestCase
 
     public function testIndex(): void
     {
-        $crawler = $this->client->request('GET', $this->path);
-        $user = $this->studentRepository->findOneById(3);
+        // User 5 is Admin
+        $user = $this->studentRepository->findOneById(5);
         $this->client->loginUser($user);
-
+        $this->client->request('GET', $this->path);
         self::assertResponseStatusCodeSame(200);
     }
 
     public function testNew(): void
     {
-        $this->markTestIncomplete();
+        $user = $this->studentRepository->findOneById(5);
+        $this->client->loginUser($user);
         $this->client->request('GET', sprintf('%snew', $this->path));
 
         self::assertResponseStatusCodeSame(200);
 
-        $this->client->submitForm('Save', [
+        $this->client->submitForm('Opslaan', [
             'trip[title]' => 'Testing',
-            'trip[location]' => 'Testing',
+            'trip[destination]' => 'Testing',
             'trip[description]' => 'Testing',
-            'trip[startdate]' => 'Testing',
-            'trip[enddate]' => 'Testing',
-            'trip[maxStudents]' => 'Testing',
+            'trip[maxStudents]' => '5',
         ]);
-
-        self::assertResponseRedirects('/sweet/food/');
 
         self::assertSame(1, $this->repository->count([]));
     }
 
     public function testShow(): void
     {
-        $this->markTestIncomplete();
+        $user = $this->studentRepository->findOneById(3);
+        $this->client->loginUser($user);
+
         $fixture = new Trip();
         $fixture->setTitle('My Title');
-        $fixture->setLocation('My Title');
+        $fixture->setDestination('My Title');
         $fixture->setDescription('My Title');
-        $fixture->setStartdate('My Title');
-        $fixture->setEnddate('My Title');
-        $fixture->setMaxStudents('My Title');
+        $fixture->setStartdate(new \DateTime());
+        $fixture->setEnddate(new \DateTime());
+        $fixture->setMaxStudents('5');
 
         $this->repository->add($fixture, true);
 
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Trip');
-
-        // Use assertions to check that the properties are properly displayed.
     }
 
     public function testEdit(): void
     {
-        $this->markTestIncomplete();
+        $user = $this->studentRepository->findOneById(5);
+        $this->client->loginUser($user);
+
         $fixture = new Trip();
-        $fixture->setTitle('My Title');
-        $fixture->setLocation('My Title');
-        $fixture->setDescription('My Title');
-        $fixture->setStartdate('My Title');
-        $fixture->setEnddate('My Title');
-        $fixture->setMaxStudents('My Title');
+        $fixture->setTitle('Something New');
+        $fixture->setDestination('Something New');
+        $fixture->setDescription('Something New');
+        $fixture->setStartdate(new \DateTime());
+        $fixture->setEnddate(new \DateTime());
+        $fixture->setMaxStudents('5');
 
         $this->repository->add($fixture, true);
 
@@ -95,11 +93,8 @@ class TripControllerTest extends WebTestCase
 
         $this->client->submitForm('Update', [
             'trip[title]' => 'Something New',
-            'trip[location]' => 'Something New',
+            'trip[destination]' => 'Something New',
             'trip[description]' => 'Something New',
-            'trip[startdate]' => 'Something New',
-            'trip[enddate]' => 'Something New',
-            'trip[maxStudents]' => 'Something New',
         ]);
 
         self::assertResponseRedirects('/trip/');
@@ -107,30 +102,18 @@ class TripControllerTest extends WebTestCase
         $fixture = $this->repository->findAll();
 
         self::assertSame('Something New', $fixture[0]->getTitle());
-        self::assertSame('Something New', $fixture[0]->getLocation());
+        self::assertSame('Something New', $fixture[0]->getDestination());
         self::assertSame('Something New', $fixture[0]->getDescription());
-        self::assertSame('Something New', $fixture[0]->getStartdate());
-        self::assertSame('Something New', $fixture[0]->getEnddate());
-        self::assertSame('Something New', $fixture[0]->getMaxStudents());
+      ;
     }
 
-    public function testRemove(): void
+    public function testEditNoAdmin(): void
     {
-        $this->markTestIncomplete();
-        $fixture = new Trip();
-        $fixture->setTitle('My Title');
-        $fixture->setLocation('My Title');
-        $fixture->setDescription('My Title');
-        $fixture->setStartdate('My Title');
-        $fixture->setEnddate('My Title');
-        $fixture->setMaxStudents('My Title');
+        $user = $this->studentRepository->findOneById(3);
+        $this->client->loginUser($user);
 
-        $this->repository->add($fixture, true);
+        $this->client->request('GET', $this->path);
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-        $this->client->submitForm('Delete');
-
-        self::assertResponseRedirects('/trip/');
-        self::assertSame(0, $this->repository->count([]));
+        self::assertResponseStatusCodeSame(303);
     }
 }

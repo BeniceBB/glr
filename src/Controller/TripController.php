@@ -37,7 +37,7 @@ class TripController extends AbstractController
             ]);
         }
         else{
-            return $this->render('index.html.twig');
+            return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -76,7 +76,7 @@ class TripController extends AbstractController
                 'form' => $form,
             ]);
         }
-        return $this->render('index.html.twig');
+        return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -114,7 +114,7 @@ class TripController extends AbstractController
                 'form' => $form,
             ]);
         }
-        return $this->render('index.html.twig');
+        return $this->redirectToRoute('app_trip_overview', [], Response::HTTP_SEE_OTHER);
     }
 
     /**

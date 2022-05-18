@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Attendee index{% endblock %}
+{% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
-    <h1>Attendee index</h1>
-
+<div class="col-10 mx-auto trip-detail-block p-3">
+<h1>Inschrijvingen</h1>
     <table class="table">
         <thead>
             <tr>
@@ -24,9 +24,12 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Geen inschrijvingen gevonden</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('app_trip_index') }}" class="btn btn-light">Terug naar overzicht</a>
+
+</div>
 {% endblock %}

@@ -3,9 +3,11 @@
 {% block title %}New Trip{% endblock %}
 
 {% block body %}
-    <h1>Create new Trip</h1>
+<div class="col-10 mx-auto trip-detail-block p-3">
+    <h1>Nieuwe Reis Toevoegen</h1>
 
     {{ include('trip/_form.html.twig') }}
 
-    <a href="{{ path('app_trip_index') }}">back to list</a>
+    <a href="{{ path('app_trip_index') }}" class="btn btn-light">Terug naar overzicht</a>
+</div>
 {% endblock %}

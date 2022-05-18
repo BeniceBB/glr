@@ -1,45 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trip index{% endblock %}
+{% block title %}Ga Lekker Reizen{% endblock %}
 
 {% block body %}
-    <h1>Trip index</h1>
-
+<div class="col-10 mx-auto trip-detail-block p-3">
+    <a href="{{ path('app_attendee_index') }}" class="btn btn-warning right">Alle inschrijvingen bekijken</a>
+    <a href="{{ path('app_trip_new') }}" class="btn btn-warning right mx-3">Nieuwe reis toevoegen</a>
+    <h1>Reizen</h1>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Title</th>
-                <th>Destination</th>
-                <th>Description</th>
-                <th>Startdate</th>
-                <th>Enddate</th>
-                <th>MaxStudents</th>
-                <th>actions</th>
+                <th>Titel</th>
+                <th>Bestemming</th>
+                <th>Omschrijving</th>
+                <th>Datum</th>
+                <th>Maximum studenten</th>
+                <th>Acties</th>
             </tr>
         </thead>
         <tbody>
         {% for trip in trips %}
-            <tr>
+            <tr style="max-height: 150px !important; overflow: hidden">
                 <td>{{ trip.id }}</td>
                 <td>{{ trip.title }}</td>
                 <td>{{ trip.destination }}</td>
                 <td>{{ trip.description }}</td>
-                <td>{{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }}</td>
-                <td>{{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }}</td>
+                <td style="width: 20%">{{ trip.startdate ? trip.startdate|date('Y-m-d') : '' }} - {{ trip.enddate ? trip.enddate|date('Y-m-d') : '' }}</td>
                 <td>{{ trip.maxStudents }}</td>
                 <td>
-                    <a href="{{ path('app_trip_show', {'id': trip.id}) }}">show</a>
-                    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}">edit</a>
+                    <a href="{{ path('app_trip_show', {'id': trip.id}) }}">Bekijk</a>
+                    <a href="{{ path('app_trip_edit', {'id': trip.id}) }}">Wijzigen</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8">no records found</td>
+                <td colspan="8">Geen reizen gevonden</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_trip_new') }}">Create new</a>
+</div>
 {% endblock %}
